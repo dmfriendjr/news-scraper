@@ -25,13 +25,15 @@
     </div>
 
     <div id="comments{{@index}}" class="comments-section"  data-active="false">
-      <form action="/comment" method="POST">
-        <input type="hidden" name="article" value="{{_id}}">
-        <input type="text" name="comment">
-        <button class="btn btn-success" type="submit">Submit</button>
-      </form>
-      <h2>Comments</h2>
-      <ul class="list-group">
+      <h2 class="text-center">Comments</h2>
+      <ul class="list-group m-3">
+        <li class="list-group-item">
+        <form class="form" action="/comment" method="POST">
+          <input type="hidden" name="article" value="{{_id}}">
+          <textarea name="comment" id="commentArea"></textarea>
+          <button class="btn btn-success align-self-right" type="submit">Submit</button>
+        </form>
+        </li>
         {{#each comments}}
           <li class="list-group-item">
             <div class="row">
@@ -48,7 +50,9 @@
             </div>
           </li>
         {{else}}
-        <p>No Comments</p>
+        <li class="list-group-item">
+          <p>No Comments</p>
+        </li>
         {{/each}}
       </ul>
     </div>
@@ -57,6 +61,9 @@
 </div>
 
 <style>
+#commentArea {
+  width: 100%;
+}
 .comments-section {
   display: none;
 }
