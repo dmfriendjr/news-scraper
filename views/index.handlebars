@@ -1,0 +1,72 @@
+<h1>Scraper</h1>
+<form action="/scrape" method="GET">
+  <button type="submit" class="btn btn-success">Scrape New Articles</button>
+</form>
+
+<div id="accordion">
+  {{#each articles}}
+  <div class="card">
+    <div class="card-header" id="heading{{@index}}: {{this}}">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-index={{@index}} data-toggle="collapse" data-target="#collapse{{@index}}: {{this}}" aria-expanded="true" aria-controls="collapse{{@index}}: {{this}}">
+          {{title}}
+        </button>
+      </h5>
+    </div>
+
+    <div id="collapse{{@index}}: {{this}}" class="collapse" aria-labelledby="heading{{@index}}: {{this}}" data-parent="#accordion">
+      <div class="card-body">
+        {{#each content}}
+          <p>{{this}}</p>
+        {{/each}}
+        <a href={{link}} target="_blank"><button class="btn btn-info">View On Site</button></a>
+        <button class="btn btn-info comment-button" data-index="{{@index}}">Comments</button>
+      </div>
+    </div>
+
+    <div id="comments{{@index}}" class="comments-section"  data-active="false">
+      <form action="/comment" method="POST">
+        <input type="hidden" name="article" value="{{_id}}">
+        <input type="text" name="comment">
+        <button class="btn btn-success" type="submit">Submit</button>
+      </form>
+      <h2>Comments</h2>
+      <ul class="list-group">
+        {{#each comments}}
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-10">
+              {{this.body}}
+              </div>
+              <div class="col-2">
+                <form action="/comment?_method=DELETE" method="POST">
+                  <input type="hidden" name="_method" value="DELETE">
+                  <input type="hidden" name="comment" value={{this._id}}>
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+              </div>
+            </div>
+          </li>
+        {{else}}
+        <p>No Comments</p>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+<style>
+.comments-section {
+  display: none;
+}
+</style>
+
+<script>
+  $('.btn-link').on('click', event => {
+     $(`#comments${$(event.target).data('index')}`).hide(); 
+  });
+  $('.comment-button').on('click', event => {
+    $(`#comments${$(event.target).data('index')}`).toggle();
+  });
+</script>
