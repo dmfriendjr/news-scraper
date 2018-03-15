@@ -52,12 +52,13 @@ router.get('/scrape', (req, res) => {
         //Only insert if article has content and is not in db already
         console.log('Length check is:' + articles[i].content.length);
         if (articles[i].content.length !== 0) {
-          // db.Article.find({"title": articles[i].title}, (err, data) => {
-            // if (data.length === 0) {
+          let currentArticle = articles[i];
+          db.Article.find({"title": articles[i].title}, (err, data) => {
+            if (data.length === 0) {
               console.log("creating article in db!");
-              db.Article.create(articles[i]);
-            // } 
-          // });
+              db.Article.create(currentArticle);
+            } 
+          });
         }
         i++;
       });
