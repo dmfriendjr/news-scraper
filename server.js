@@ -9,6 +9,7 @@ const commentRoutes = require('./Controllers/comments');
 
 const app = express();
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newsScraper";
+const port = process.env.PORT || 3000;
 
 app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -24,4 +25,4 @@ app.use(scrapeRoutes);
 app.use(commentRoutes);
 
 
-app.listen(3000);
+app.listen(port);
