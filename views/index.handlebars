@@ -1,20 +1,15 @@
-<h1>Scraper</h1>
-<form action="/scrape" method="GET">
-  <button type="submit" class="btn btn-success">Scrape New Articles</button>
-</form>
-
 <div id="accordion">
   {{#each articles}}
   <div class="card">
     <div class="card-header" id="heading{{@index}}: {{this}}">
       <h5 class="mb-0">
-        <button class="btn btn-link" data-index={{@index}} data-toggle="collapse" data-target="#collapse{{@index}}: {{this}}" aria-expanded="true" aria-controls="collapse{{@index}}: {{this}}">
+        <button class="btn btn-link" data-index={{@index}} data-toggle="collapse" data-target="#collapse{{@index}}" aria-expanded="true" aria-controls="collapse{{@index}}: {{this}}">
           {{title}}
         </button>
       </h5>
     </div>
 
-    <div id="collapse{{@index}}: {{this}}" class="collapse" aria-labelledby="heading{{@index}}: {{this}}" data-parent="#accordion">
+    <div id="collapse{{@index}}" class="collapse" aria-labelledby="heading{{@index}}" data-parent="#accordion">
       <div class="card-body">
         {{#each content}}
           <p>{{this}}</p>
@@ -74,6 +69,6 @@
      $(`#comments${$(event.target).data('index')}`).hide(); 
   });
   $('.comment-button').on('click', event => {
-    $(`#comments${$(event.target).data('index')}`).toggle();
+    $(`#comments${$(event.target).data('index')}`).slideToggle("fast");
   });
 </script>
