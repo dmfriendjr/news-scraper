@@ -8,14 +8,16 @@ const viewRoutes = require('./Controllers/view');
 const commentRoutes = require('./Controllers/comments');
 
 const app = express();
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newsScraper";
 
 app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
+
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/newsScraper");
+mongoose.connect(MONGODB_URI);
 
 app.use(viewRoutes);
 app.use(scrapeRoutes);
