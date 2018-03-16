@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../models');
 const mongoose = require('mongoose')
 
-router.post('/comment', (req, res) => {
+router.post('/comments', (req, res) => {
   console.log(req.body);
   db.Comment.create({'body': req.body.comment}).then(comment => {
     console.log('Comment id:', mongoose.Types.ObjectId(comment._id));
@@ -14,10 +14,9 @@ router.post('/comment', (req, res) => {
   });
 })
 
-router.delete('/comment', (req, res) => {
-  console.log(req.body);
-  db.Comment.deleteOne({'_id': mongoose.Types.ObjectId(req.body.comment)}).then( () => {
-    res.redirect('/');
+router.delete('/comments/:id', (req, res) => {
+  db.Comment.deleteOne({'_id': mongoose.Types.ObjectId(req.params.id)}).then( () => {
+    res.end();
   })
 })
 

@@ -23,7 +23,7 @@
       <h2 class="text-center">Comments</h2>
       <ul class="list-group m-3">
         <li class="list-group-item">
-        <form class="form" action="/comment" method="POST">
+        <form class="form" action="/comments" method="POST">
           <input type="hidden" name="article" value="{{_id}}">
           <textarea name="comment" id="commentArea"></textarea>
           <button class="btn btn-success align-self-right" type="submit">Submit</button>
@@ -36,18 +36,10 @@
               {{this.body}}
               </div>
               <div class="col-2">
-                <form action="/comment?_method=DELETE" method="POST">
-                  <input type="hidden" name="_method" value="DELETE">
-                  <input type="hidden" name="comment" value={{this._id}}>
-                  <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
+                  <button class="btn btn-danger delete-comment-btn" data-comment="{{_id}}">Delete</button>
               </div>
             </div>
           </li>
-        {{else}}
-        <li class="list-group-item">
-          <p>No Comments</p>
-        </li>
         {{/each}}
       </ul>
     </div>
@@ -64,11 +56,3 @@
 }
 </style>
 
-<script>
-  $('.btn-link').on('click', event => {
-     $(`#comments${$(event.target).data('index')}`).hide(); 
-  });
-  $('.comment-button').on('click', event => {
-    $(`#comments${$(event.target).data('index')}`).slideToggle("fast");
-  });
-</script>

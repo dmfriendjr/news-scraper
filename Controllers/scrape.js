@@ -41,27 +41,24 @@ router.get('/scrape', (req, res) => {
     })
 
     Promise.all(promises).then((allContent) => {
-      console.log('All done!');
       let i = 0;
-      let j = 0;
       allContent.forEach(function(content) {
         content('div.post-content').children('p').each( (index, textContent) => {
           articles[i].content.push($(textContent).text());
         });
   
         //Only insert if article has content and is not in db already
-        console.log('Length check is:' + articles[i].content.length);
         if (articles[i].content.length !== 0) {
           let currentArticle = articles[i];
-          db.Article.find({"title": articles[i].title}, (err, data) => {
+          let promise = db.Article.find({"title": articles[i].title}, (err, data) => {
             if (data.length === 0) {
-              console.log("creating article in db!");
               db.Article.create(currentArticle);
             } 
           });
         }
         i++;
       });
+    }).then(() => {
       res.redirect('/');
     });
   });
